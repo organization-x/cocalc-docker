@@ -11,11 +11,11 @@ If you need to modify the dockerfile:
     ```
     
 If you do not need to modify the dockerfile:
-- pull the image done so you don't have to build it. 
+- pull the image down so you don't have to build it. 
     ```
     docker run --name=cocalc -d -v cocalc-volume:/projects -p 443:443 --gpus all zikegcwk/nvidia-cocalc
     ```
- I
+
 
 # CoCalc Docker image
 
