@@ -1,5 +1,8 @@
-FROM ubuntu:18.04
+# get GPU stuff here
+FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
+CMD nvidia-smi
 
+# all the original cocalc
 MAINTAINER William Stein <wstein@sagemath.com>
 
 USER root
@@ -163,17 +166,17 @@ RUN \
   && /usr/bin/npm install -g npm
 
 # Install Julia
-ARG JULIA=1.2.0
-RUN cd /tmp \
- && wget https://julialang-s3.julialang.org/bin/linux/x64/${JULIA%.*}/julia-${JULIA}-linux-x86_64.tar.gz \
- && tar xf julia-${JULIA}-linux-x86_64.tar.gz -C /opt \
- && rm  -f julia-${JULIA}-linux-x86_64.tar.gz \
- && mv /opt/julia-* /opt/julia \
- && ln -s /opt/julia/bin/julia /usr/local/bin
+# ARG JULIA=1.2.0
+# RUN cd /tmp \
+#  && wget https://julialang-s3.julialang.org/bin/linux/x64/${JULIA%.*}/julia-${JULIA}-linux-x86_64.tar.gz \
+#  && tar xf julia-${JULIA}-linux-x86_64.tar.gz -C /opt \
+#  && rm  -f julia-${JULIA}-linux-x86_64.tar.gz \
+#  && mv /opt/julia-* /opt/julia \
+#  && ln -s /opt/julia/bin/julia /usr/local/bin
 
-# Install R Jupyter Kernel package into R itself (so R kernel works)
-RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'devtools', 'uuid', 'digest', 'IRkernel'), repos='https://cloud.r-project.org')" | sage -R --no-save
-RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'devtools', 'uuid', 'digest', 'IRkernel'), repos='https://cloud.r-project.org')" | R --no-save
+# # Install R Jupyter Kernel package into R itself (so R kernel works)
+# RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'devtools', 'uuid', 'digest', 'IRkernel'), repos='https://cloud.r-project.org')" | sage -R --no-save
+# RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'devtools', 'uuid', 'digest', 'IRkernel'), repos='https://cloud.r-project.org')" | R --no-save
 
 
 # Commit to checkout and build.
@@ -255,7 +258,7 @@ RUN \
 # Other pip3 packages
 # NOTE: Upgrading zmq is very important, or the Ubuntu version breaks everything..
 RUN \
-  pip3 install --upgrade --no-cache-dir  pandas plotly scipy  scikit-learn seaborn bokeh zmq
+  pip3 install --upgrade --no-cache-dir  pandas plotly scipy  scikit-learn seaborn bokeh zmq opencv-python
 
 CMD /root/run.py
 
