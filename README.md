@@ -1,3 +1,22 @@
+# Note about the fork
+Added two simple lines to enable a GPU run from cocalc
+
+Steps to run it is simple, depending if you need to have a modified dockerfile or not.
+
+If you need to modify the dockerfile:
+- build the image using docker build with the modified Dockerfile. With Amazon Deep Learning AMI and a large instance (g4nLarge?), the build time is about 2 hours. 
+- when the build process is finished, then start a container with the image. You will need to make sure that you are running with the option to pass gpu device into the container. Like so:  
+    ```
+    docker run --name=cocalc -d -v cocalc-volume:/projects -p 443:443 --gpus all <name of your image>
+    ```
+    
+If you do not need to modify the dockerfile:
+- pull the image done so you don't have to build it. 
+    ```
+    docker run --name=cocalc -d -v cocalc-volume:/projects -p 443:443 --gpus all zikegcwk/nvidia-cocalc
+    ```
+ I
+
 # CoCalc Docker image
 
 [![](https://images.microbadger.com/badges/image/sagemathinc/cocalc.svg)](https://microbadger.com/images/sagemathinc/cocalc "Size and number of layers")
