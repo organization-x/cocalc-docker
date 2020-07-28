@@ -7,13 +7,13 @@ If you need to modify the dockerfile:
 - build the image using docker build with the modified Dockerfile. With Amazon Deep Learning AMI and a large instance (g4nLarge?), the build time is about 2 hours. 
 - when the build process is finished, then start a container with the image. You will need to make sure that you are running with the option to pass gpu device into the container. Like so:  
     ```
-    docker run --name=cocalc -d -v cocalc-volume:/projects -p 443:443 --gpus all <name of your image>
+    docker run --name=cocalc -d -v cocalc-volume:/projects -p 9090:443 --gpus all <name of your image>
     ```
     
 If you do not need to modify the dockerfile:
 - pull the image down so you don't have to build it. 
     ```
-    docker run --name=cocalc -d -v cocalc-volume:/projects -p 443:443 --gpus all zikegcwk/nvidia-cocalc
+    docker run --name=cocalc -d -v cocalc-volume:/projects -p 9090:443 --gpus all zikegcwk/nvidia-cocalc
     ```
 
 
